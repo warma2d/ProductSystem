@@ -1,0 +1,38 @@
+{% extends 'admin/template.html.twig' %}
+
+{% block content %}
+    <style>
+        table {
+            border-collapse: collapse;
+        }
+
+        tr, th, td, table {
+            border: 1px solid black;
+        }
+
+        td {
+            padding: 5px;
+        }
+
+        .message {
+            color: orange;
+        }
+    </style>
+
+    <div class="message">{{ message }}</div>
+
+    <h1>Список менеджеров</h1>
+    <table>
+        <tr><th>id</th><th>Имя</th><th>Фамилия</th><th>Отчество</th><th>Дата создания</th><th></th></tr>
+        {% for manager in managers %}
+            <tr>
+                <td>{{ manager.id }}</td>
+                <td>{{ manager.name }}</td>
+                <td>{{ manager.surname }}</td>
+                <td>{{ manager.patronymic }}</td>
+                <td>{{ manager.atCreated|date('d.m.Y') }}</td>
+                <td><a href="/manager/{{ manager.id }}/delete">Удалить</a></td>
+            </tr>
+        {% endfor %}
+    </table>
+{% endblock %}

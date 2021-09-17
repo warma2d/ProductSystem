@@ -1,0 +1,55 @@
+version: "3.8"
+services:
+
+    # PHP service
+    app:
+        build: .
+        container_name: php-app
+        working_dir: /var/www/ProductSystem/src
+        volumes:
+            - ./src/:/var/www/ProductSystem/src
+            - ./vendor/:/var/www/ProductSystem/vendor
+            - ./tests/:/var/www/ProductSystem/tests
+            - ./.env/:/var/www/ProductSystem/.env
+            - ./composer.json/:/var/www/ProductSystem/composer.json
+            - ./composer.lock/:/var/www/ProductSystem/composer.lock
+        networks:
+            - app-network
+
+    # MySQL database service
+    db:
+        image: mysql:5.7
+        command: --character-set-server=utf8 --collation-server=utf8_general_ci
+        container_name: mysql-db
+        ports:
+            - "3306:3306"
+        environment:
+            MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
+            MYSQL_DATABASE: ${DB_DATABASE}
+            MYSQL_USER: ${DB_USERNAME}
+            MYSQL_PASSWORD: ${DB_PASSWORD}
+        env_file:
+            - ./.env
+        networks:
+            - app-network
+
+    # Nginx service
+    nginx:
+        image: nginx:alpine
+        container_name: php-nginx
+        ports:
+            - 8000:80
+        volumes:
+            - ./src/:/var/www/ProductSystem/src
+            - ./vendor/:/var/www/ProductSystem/vendor
+            - ./tests/:/var/www/ProductSystem/tests
+            - ./.env/:/var/www/ProductSystem/.env
+            - ./composer.json/:/var/www/ProductSystem/composer.json
+            - ./composer.lock/:/var/www/ProductSystem/composer.lock
+            - ./nginx/conf.d/:/etc/nginx/conf.d/
+        networks:
+            - app-network
+
+networks:
+    app-network:
+        driver: bridge

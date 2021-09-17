@@ -1,0 +1,22 @@
+{% extends 'manager/template.html.twig' %}
+
+{% block content %}
+<style>
+    label {
+        display: block;
+    }
+
+    .errors {
+        color: darkred;
+    }
+</style>
+
+<h1>Создание продукта</h1>
+<form action="/product/create" method="post">
+    <label>* Название: <input type="text" name="name" value="{{ post.name }}"></label>
+    <label>* Цена: <input type="text" name="price" value="{{ post.price }}"></label>
+    <input type="submit" value="Сохранить">
+    <div class="errors">{{ errors | raw }}</div>
+</form>
+
+{% endblock %}

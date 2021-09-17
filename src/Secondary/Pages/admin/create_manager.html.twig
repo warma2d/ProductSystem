@@ -1,0 +1,25 @@
+{% extends 'admin/template.html.twig' %}
+
+{% block content %}
+<style>
+    label {
+        display: block;
+    }
+
+    .errors {
+        color: darkred;
+    }
+</style>
+
+<h1>Создание менеджера</h1>
+<form action="/manager/create" method="post">
+    <label>* Имя: <input type="text" name="name" value="{{ post.name }}"></label>
+    <label>* Фамилия: <input type="text" name="surname" value="{{ post.surname }}"></label>
+    <label>* Отчество: <input type="text" name="patronymic" value="{{ post.patronymic }}"></label>
+    <label>* Email: <input type="email" name="email" value="{{ post.email }}"></label>
+    <label>* Пароль: <input type="password" name="password"></label>
+    <input type="submit" value="Сохранить">
+    <div class="errors">{{ errors | raw }}</div>
+</form>
+
+{% endblock %}

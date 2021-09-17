@@ -1,0 +1,28 @@
+{% extends 'manager/template.html.twig' %}
+
+{% block content %}
+<style>
+    label, select {
+        display: block;
+    }
+
+    .errors {
+        color: darkred;
+    }
+</style>
+
+<h1>Создание набора</h1>
+<form action="/set/create" method="post">
+    <label>* Название: <input type="text" name="name" value="{{ post.name }}"></label>
+
+    <select name="products[]" multiple size="{{ products|length }}">
+        {% for product in products %}
+            <option value="{{ product.id }}|{{ product.isSet|number_format }}">{{ product.name }}</option>
+        {% endfor %}
+    </select>
+
+    <input type="submit" value="Сохранить">
+    <div class="errors">{{ errors | raw }}</div>
+</form>
+
+{% endblock %}

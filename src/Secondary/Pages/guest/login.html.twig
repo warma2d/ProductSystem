@@ -1,0 +1,21 @@
+{% extends 'guest/template.html.twig' %}
+
+{% block content %}
+    <style>
+        label {
+            display: block;
+        }
+
+        .errors {
+            color: darkred;
+        }
+    </style>
+
+    <h1>Форма входа</h1>
+    <form action="/auth" method="post">
+        <label>* Email: <input type="text" name="email" value="{{ post.email }}"></label>
+        <label>* Пароль: <input type="password" name="password" value="{{ post.password }}"></label>
+        <input type="submit" value="Войти">
+        <div class="errors">{{ errors | raw }}</div>
+    </form>
+{% endblock %}
